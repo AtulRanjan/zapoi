@@ -1,0 +1,15 @@
+{
+  "Jamie": {
+    "username": "joliver",
+    "name": "Jamie Oliver",
+    "email": "joliver@example.com",
+    "password": "cooking123"
+  },
+
+  "Gordon": {
+    "username": "gramsey",
+    "name": "Gordon Ramsey",
+    "email": "gramsey@example.com",
+    "password": "swearing123"
+  }
+}

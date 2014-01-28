@@ -1,0 +1,30 @@
+.navbar.navbar-inverse.navbar-static-top
+    .navbar-inner
+        .container
+          button.btn.btn-navbar(type='button', data-toggle='collapse', data-target='.nav-collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.brand(href='#{settings.baseUrl}/') POI
+          .nav-collapse.collapse
+            ul.nav
+              li.active
+                a(href='#{settings.baseUrl}/') Home
+            if (user)
+              ul.nav.pull-right
+                li.dropdown
+                  a#user-navigation.dropdown-toggle(href='#', data-toggle='dropdown')
+                        | #{user.name}
+                        b.caret
+                      ul.dropdown-menu
+                        li
+                          a(href='#{settings.baseUrl}/logout') Logout
+            if (!user)
+              form.navbar-form.pull-right(method='post', action='#{settings.baseUrl}/login')
+                input.span2(name='email', type='text', placeholder='Email', autocomplete='off')
+                = ' '
+                input.span2(name='password', type='password', placeholder='Password', autocomplete='off')
+                = ' '
+                button.btn.btn-danger(type='submit') Login
+                = ' '
+                a.btn.btn-success(href='#{settings.baseUrl}/register') Register

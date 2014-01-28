@@ -1,0 +1,28 @@
+{
+  "author": "Milan Milanov, Viktor Staikov",
+  "name": "zaPOI",
+  "description": "Points Of Interest (POI) application built with NodeJS, Express and MongoDB",
+  "version": "0.0.1",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "export NODE_ENV=test && ./node_modules/mocha/bin/mocha && ./node_modules/cucumber/bin/cucumber.js -f=pretty"
+  },
+  "dependencies": {
+    "mongoose": "3.8.x",
+    "express": "3.x",
+    "express-namespace": "0.1.x",
+    "express-form": "0.10.x",
+    "jade": "1.1.x",
+    "passport": "0.1.x",
+    "passport-local": "0.1.x",
+    "passport-local-mongoose": "0.2.x"
+  },
+  "devDependencies": {
+    "zombie": "latest",
+    "cucumber": "latest",
+    "mocha": "latest",
+    "should": "latest",
+    "passport-stub": "latest"
+  }
+}
