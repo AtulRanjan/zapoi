@@ -3,8 +3,6 @@ var passportStub = require('passport-stub'),
   env = require('../../app/config/environments'),
   http;
 
-exports.app = server.app;
-
 // Load test goodies
 before(function (done) {
 
@@ -43,6 +41,8 @@ after(function (done) {
     });
   });
 });
+
+exports.app = server.app;
 
 exports.loggedAs = function (userData) {
   passportStub.login([{

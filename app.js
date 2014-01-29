@@ -2,6 +2,7 @@
 var fs = require('fs'),
   path = require('path'),
   express = require('express'),
+  flash = require('connect-flash'),
   http = require('http'),
   env = require('./app/config/environments.js'),
   mongoose = require('mongoose'),
@@ -22,6 +23,7 @@ app.configure(function () {
   app.set('baseUrl', env.baseUrl);
 
   app.use(express.cookieParser());
+  app.use(flash());
 
   // Use the following two lines instead of the express.bodyParser
   // until express updates to use Connect 3.0

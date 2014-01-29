@@ -34,9 +34,10 @@ describe('User', function () {
       });
     });
 
-    it("should not tell its password to the world", function (done) {
+    it("should not tell its password hash and salt", function (done) {
       User.find(function (err, user) {
-        should.equal(user.password, undefined);
+        should.equal(user.hash, undefined);
+        should.equal(user.salt, undefined);
         done();
       });
     }),
