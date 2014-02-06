@@ -28,8 +28,10 @@
                 button.btn.btn-danger(type='submit') Login
                 = ' '
                 a.btn.btn-success(href='#{settings.baseUrl}/register') Register
-if (message != '')
+if (typeof(messages) !== 'undefined' && messages.length != 0)
     div.span1
     div.span10.center.alert.alert-danger
       button.close(type='button', data-dismiss='alert') &times;
-      | #{message}
+      each message in messages
+        | #{message}
+        br

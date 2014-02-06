@@ -9,7 +9,7 @@ module.exports = function () {
     this.generateUser(this.fixtures.users.Jamie, callback);
   });
 
-  this.Given(/^I enter my credentials$/, function (callback) {
+  this.When(/^I enter my credentials$/, function (callback) {
     this.enterCredentials(this.fixtures.users.Jamie, callback);
   });
 

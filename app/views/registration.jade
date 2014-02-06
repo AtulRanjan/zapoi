@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  form(method='post', action='#{settings.baseUrl}/register')
+    h2 Create an account
+    div
+      input#regEmail.input-xlarge(type='text', name='email', placeholder='Email', value=email)
+    div
+      input#regDisplayName.input-xlarge(type='text', name='displayName', placeholder='Display name', value=displayName)
+    div
+      input#regPassword.input-xlarge(type='password', name='password', placeholder='Password')
+    div
+      input#regPasswordConfirmation.input-xlarge(type='password', name='passwordConfirmation', placeholder='Confirm password')
+    button.btn.btn-large.btn-primary(type='submit') Register
