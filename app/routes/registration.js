@@ -1,7 +1,8 @@
 var passport = require('passport'),
   config = require('../config/environments.js'),
   User = require('../models/user'),
-  form = require("express-form"),
+  form = require('express-form'),
+  ensureNotLoggedIn = require('../utils/middlewares').ensureNotLoggedIn,
   validate = form.validate;
 
 
@@ -9,11 +10,12 @@ module.exports = function (app) {
 
   app.namespace(config.baseUrl, function () {
 
-    app.get('/register', function (req, res) {
+    app.get('/register', ensureNotLoggedIn, function (req, res) {
       return res.render('registration');
     });
 
     app.post('/register',
+      ensureNotLoggedIn,
       form(
         validate("email").trim().required('Email', 'The email address field is required.')
         .isEmail("Please enter a valid email address."),

@@ -10,9 +10,21 @@ exports.posts = function (app, address, done) {
 };
 
 exports.postRedirects = function (app, requestAddress, expectedAddress, done) {
-  request(app).post(requestAddress).expect(302).end(done);
+  request(app).post(requestAddress).expect(302).end(function (err, res) {
+    if (err) {
+      throw new Error('Error during redirect to ' + expectedAddress);
+    }
+    should.equal(res.headers.location, expectedAddress);
+    done();
+  });
 };
 
 exports.getRedirects = function (app, requestAddress, expectedAddress, done) {
-  request(app).get(requestAddress).expect(302).end(done);
+  request(app).get(requestAddress).expect(302).end(function (err, res) {
+    if (err) {
+      throw new Error('Error during redirect to ' + expectedAddress);
+    }
+    should.equal(res.headers.location, expectedAddress);
+    done();
+  });
 };
