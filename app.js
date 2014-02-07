@@ -71,8 +71,5 @@ exports.mongoose = mongoose;
 if (!module.parent) {
   mongoose.connect(env.dbUrl);
   app.listen(env.port);
-  console.log('listening on port ' + env.port);
-}
-else {
-  console.error('something went wrong');
+  console.log('Listening on port ' + env.port);
 }
