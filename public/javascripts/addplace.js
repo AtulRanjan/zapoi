@@ -31,7 +31,6 @@ $(document).ready(function(){
 
   $('#slider-pricing').slider({
     orientation: "horizontal",
-    range: "min",
     max: 4,
     value: 2,
     create: function(event, ui){
@@ -41,7 +40,7 @@ $(document).ready(function(){
     },
     slide: function( event, ui ) {
 
-      var pricing_lvls = ['Go there before paycheck', 'Affordable', 'Normal', 'Expensive', 'Do not go there unless money is not a factor for you', 'NO'];
+      var pricing_lvls = ['Go there before paycheck', 'Affordable', 'Normal', 'Expensive', 'Do not go there unless money is not a factor for you', 'NO >:('];
       
       var value = ui.value;
 
@@ -52,13 +51,10 @@ $(document).ready(function(){
 
   $('#open24hours').click(function() {
     if(this.checked) {
-        $('#hours-wrp').fadeOut();
+      $('#hours-wrp').fadeOut();
     }
     else{
       $('#hours-wrp').fadeIn();
     }
   });
-  $('form').on('submit', function (e) {
-    console.log(e)
-  })
 })

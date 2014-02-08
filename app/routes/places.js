@@ -14,7 +14,7 @@ module.exports = function (app) {
 
     app.post('/places/add', function(req,res){
       //TODO: add the place in the db
-      res.render('/', {
+      res.render('index', {
         user: req.user,
         messages: req.flash('error')
       });

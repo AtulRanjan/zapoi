@@ -9,86 +9,98 @@ block content
   
   form#newplace(method='post', action='#{settings.baseUrl}/places/add')
     h2 Add new place
-    div
-      input#name.input-xlarge(type='text', name='name', placeholder='Name', value=name, required)
-    div
-      input#description.input-xlarge(type='text', name='description', placeholder='Description', value=description)
-    div
-      input#categories.input-xlarge(type='text', name='categories', placeholder='Categories (comma separated)', value=categories, required) 
-    
-    div
-      input#address.input-xlarge(type='text', name='address', placeholder='Address', value=address, required)
+    section#general-info
+      h3 General info
+      div
+        input#name.input-xlarge(type='text', name='name', placeholder='Name', value=name)
+      div
+        input#description.input-xlarge(type='text', name='description', placeholder='Description', value=description)
+      div
+        input#categories.input-xlarge(type='text', name='categories', placeholder='Categories (comma separated)', value=categories) 
+      div
+        input#address.input-xlarge(type='text', name='address', placeholder='Address', value=address)
 
-    div
-      input#open24hours.input-xlarge(type='checkbox', name='open24hours')
-      label(for='open24hours') Open 24-hours
+    section#workingh
+      h3 Working hours
+      div
+        input#open24hours.input-xlarge(type='checkbox', name='open24hours')
+        label(for='open24hours') Open 24-hours
+        
+        #hours-wrp
+          p
+            label(for='Monday-hours') Monday:
+            span from
+            input#Monday-hours-open(type='text', name='workingHours[0][open]')
+            span to
+            input#Monday-hours-close(type='text', name='workingHours[0][close]')
+            #slider-Monday-hours.slider
+          p
+            label(for='Tuesday-hours') Tuesday:
+            span from
+            input#Tuesday-hours-open(type='text', name='workingHours[1][open]')
+            span to
+            input#Tuesday-hours-close(type='text', name='workingHours[1][close]')
+            #slider-Tuesday-hours.slider
+          p
+            label(for='Wednesday-hours') Wednesday:
+            span from
+            input#Wednesday-hours-open(type='text', name='workingHours[2][open]')
+            span to
+            input#Wednesday-hours-close(type='text', name='workingHours[2][close]')
+            #slider-Wednesday-hours.slider
+          p
+            label(for='Thursday-hours') Thursday:
+            span from
+            input#Thursday-hours-open(type='text', name='workingHours[3][open]')
+            span to
+            input#Thursday-hours-close(type='text', name='workingHours[3][close]')
+            #slider-Thursday-hours.slider
+          p
+            label(for='Friday-hours') Friday:
+            span from
+            input#Friday-hours-open(type='text', name='workingHours[4][open]')
+            span to
+            input#Friday-hours-close(type='text', name='workingHours[4][close]')
+            #slider-Friday-hours.slider
+          p
+            label(for='Saturday-hours') Saturday:
+            span from
+            input#Saturday-hours-open(type='text', name='workingHours[5][open]')
+            span to
+            input#Saturday-hours-close(type='text', name='workingHours[5][close]')
+            #slider-Saturday-hours.slider
+          p
+            label(for='Sunday-hours') Sunday:
+            span from
+            input#Sunday-hours-open(type='text', name='workingHours[6][open]')
+            span to
+            input#Sunday-hours-close(type='text', name='workingHours[6][close]')
+            #slider-Sunday-hours.slider
+    section#additional
+      h3 Additional info    
+      div
+        label Pricing level:
+        span#pricing-lvl(type='text')
+        input#pricing-lvl-hidden(type='text', name='additionalInfo[pricing]', value=3, style='display:none;')
+        #slider-pricing
+
+      div
+        input#website.input-xlarge(type='text', name='website', placeholder='Website', value=website)
       
-      #hours-wrp
-        p
-          label(for='Monday-hours') Monday:
-          span from
-          input#Monday-hours-open(type='text', name='workingHours[0][open]')
-          span to
-          input#Monday-hours-close(type='text', name='workingHours[0][close]')
-          #slider-Monday-hours.slider
-        p
-          label(for='Tuesday-hours') Tuesday:
-          span from
-          input#Tuesday-hours-open(type='text', name='workingHours[1][open]')
-          span to
-          input#Tuesday-hours-close(type='text', name='workingHours[1][close]')
-          #slider-Tuesday-hours.slider
-        p
-          label(for='Wednesday-hours') Wednesday:
-          span from
-          input#Wednesday-hours-open(type='text', name='workingHours[2][open]')
-          span to
-          input#Wednesday-hours-close(type='text', name='workingHours[2][close]')
-          #slider-Wednesday-hours.slider
-        p
-          label(for='Thursday-hours') Thursday:
-          span from
-          input#Thursday-hours-open(type='text', name='workingHours[3][open]')
-          span to
-          input#Thursday-hours-close(type='text', name='workingHours[3][close]')
-          #slider-Thursday-hours.slider
-        p
-          label(for='Friday-hours') Friday:
-          span from
-          input#Friday-hours-open(type='text', name='workingHours[4][open]')
-          span to
-          input#Friday-hours-close(type='text', name='workingHours[4][close]')
-          #slider-Friday-hours.slider
-        p
-          label(for='Saturday-hours') Saturday:
-          span from
-          input#Saturday-hours-open(type='text', name='workingHours[5][open]')
-          span to
-          input#Saturday-hours-close(type='text', name='workingHours[5][close]')
-          #slider-Saturday-hours.slider
-        p
-          label(for='Sunday-hours') Sunday:
-          span from
-          input#Sunday-hours-open(type='text', name='workingHours[6][open]')
-          span to
-          input#Sunday-hours-close(type='text', name='workingHours[6][close]')
-          #slider-Sunday-hours.slider
-      
-    div
-      label Pricing level:
-      span#pricing-lvl(type='text')
-      input#pricing-lvl-hidden(type='text', name='pricing', value=3, style='display:none;')
-      #slider-pricing
+      div
+        input#phone.input-xlarge(type='text', name='phone', placeholder='Phone', value=phone)
 
-    div
-      input#seats.input-xlarge(type='number', name='seats', placeholder='Seats (if applicable)', value=seats)
+      div
+        input#seats.input-xlarge(type='number', name='additionalInfo[seats]', placeholder='Seats (if applicable)', value=seats)
 
-    div
-      input#wifi.input-xlarge(type='checkbox', name='wifi', value=wifi)
-      label(for='wifi') Wi-Fi
+      div
+        input#wifi.input-xlarge(type='checkbox', name='additionalInfo[wifi]', value=wifi)
+        label(for='wifi') Wi-Fi
 
-    div
-      input#parking.input-xlarge(type='checkbox', name='parking', value=parking)
-      label(for='parking') Parking
+      div
+        input#parking.input-xlarge(type='checkbox', name='additionalInfo[parking]', value=parking)
+        label(for='parking') Parking
 
     button.btn.btn-large.btn-primary(type='submit') Save
+
+    a.btn.btn-large.btn-primary(href='#{settings.baseUrl}/') Go back
