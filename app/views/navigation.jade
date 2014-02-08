@@ -19,6 +19,7 @@
                           a(href='#{settings.baseUrl}/logout') Logout
             if (!user)
               form.navbar-form.pull-right(method='post', action='#{settings.baseUrl}/login')
+                input(name='_csrf', type='hidden', value=csrftoken)
                 input.span2(name='email', type='text', placeholder='Email', autocomplete='off')
                 = ' '
                 input.span2(name='password', type='password', placeholder='Password', autocomplete='off')

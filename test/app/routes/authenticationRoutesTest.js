@@ -1,4 +1,5 @@
 var test = require('../init'),
+  request = require('supertest'),
   utils = require('../utils');
 
 describe('Authentication', function () {
@@ -11,8 +12,8 @@ describe('Authentication', function () {
         test.loggedOut();
       });
 
-      it('POST /login should redirect to home page', function (done) {
-        utils.postRedirects(test.app, '/login', '/', done);
+      it('POST /login should return 403 forbidden error', function (done) {
+        request(test.app).post('/login').expect(403).end(done);
       });
     }),
 

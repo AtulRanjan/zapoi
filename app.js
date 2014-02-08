@@ -18,6 +18,7 @@ var app = express();
 app.configure(function () {
   app.set('views', __dirname + '/app/views');
   app.set('view engine', 'jade');
+  app.disable('x-powered-by');
 
   // Globally accessible values
   app.set('baseUrl', env.baseUrl);
@@ -30,13 +31,29 @@ app.configure(function () {
   app.use(express.json());
   app.use(express.urlencoded());
 
+  app.use(express.methodOverride());
+
   app.use(express.session({
-    secret: env.sessionSecret
+    secret: env.sessionSecret,
+    cookie: {
+      httpOnly: true
+    }
   }));
+
+  // CSRF protection enabled
+  app.use(express.csrf());
+  app.use(function (req, res, next) {
+    res.locals.csrftoken = req.csrfToken();
+    next();
+  });
+
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(express.compress());
   app.use(app.router);
-  app.use(express.static(__dirname + '/public'));
+  app.use(express.static(__dirname + '/public', {
+    maxAge: 60000
+  }));
 });
 
 app.configure('development', function () {
