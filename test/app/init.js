@@ -1,6 +1,8 @@
 var passportStub = require('passport-stub'),
   server = require('../../app'),
   env = require('../../app/config/environments'),
+  utils = require('../../app/utils/utils'),
+  fs = require('fs'),
   http;
 
 // Load test goodies
@@ -17,11 +19,15 @@ before(function (done) {
 
   // Load fixtures
   exports.fixtures = {};
-  var files = require('fs').readdirSync('./features/fixtures/');
+  var fixturesDir = './features/fixtures/';
+  var files = fs.readdirSync(fixturesDir);
+
   for (var i in files) {
-    var fileName = '../../features/fixtures/' + files[i];
-    var ruleName = files[i].replace('.json', '');
-    exports.fixtures[ruleName] = require(fileName);
+    if (utils.endsWith(files[i], '.json')) {
+      var fileName = '../../features/fixtures/' + files[i];
+      var ruleName = files[i].replace('.json', '');
+      exports.fixtures[ruleName] = require(fileName);
+    }
   }
 
   // Go on..
@@ -33,7 +39,7 @@ after(function (done) {
   // Stop the app and free the db connection
   http.close();
 
-  // Remove all the inserted users and close the connection
+  // Drop the database and close the connection
   server.mongoose.connection.db.dropDatabase(function () {
     // Close the mongoose connection
     server.mongoose.connection.close(function () {
