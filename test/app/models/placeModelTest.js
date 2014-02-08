@@ -81,6 +81,22 @@ describe('Place', function () {
       placeRespondsTo("additionalInfo", done);
     });
 
+    it("should tell its description to the world", function (done) {
+      placeRespondsTo("description", done);
+    });
+
+    it("should tell its comments to the world", function (done) {
+      placeRespondsTo("comments", done);
+    });
+
+    it("should tell when it was created to the world", function (done) {
+      placeRespondsTo("createdAt", done);
+    });
+
+    it("should tell whether it is approved the world", function (done) {
+      placeRespondsTo("isApproved", done);
+    });
+
     function placeRespondsTo(property, done) {
       Place.findOne({
         name: test.fixtures.places.pharmacy.name

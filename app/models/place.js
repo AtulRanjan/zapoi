@@ -89,6 +89,10 @@ var Place = new Schema({
    createdAt: {
       type: Date,
       default: Date.now
+   },
+   isApproved: {
+      type: Boolean,
+      default: false
    }
 });
 
