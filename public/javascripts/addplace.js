@@ -9,7 +9,7 @@ $(document).ready(function(){
   $('.slider').slider({
     range: true,
     min: 0,
-    max: 28*60,
+    max: 24*60,
     values: [ 10*60, 18*60 ],
     create: function(event, ui){
       var day = $(this)[0].id.split('-')[1];
@@ -29,6 +29,35 @@ $(document).ready(function(){
     }
   });
 
+  $('#slider-pricing').slider({
+    orientation: "horizontal",
+    range: "min",
+    max: 4,
+    value: 2,
+    create: function(event, ui){
+
+      $( '#pricing-lvl' ).text('Normal');
+      $( '#pricing-lvl-hidden').val(3);
+    },
+    slide: function( event, ui ) {
+
+      var pricing_lvls = ['Go there before paycheck', 'Affordable', 'Normal', 'Expensive', 'Do not go there unless money is not a factor for you', 'NO'];
+      
+      var value = ui.value;
+
+      $( '#pricing-lvl' ).text(pricing_lvls[value]);
+      $( '#pricing-lvl-hidden' ).val(value);
+    }
+  });
+
+  $('#open24hours').click(function() {
+    if(this.checked) {
+        $('#hours-wrp').fadeOut();
+    }
+    else{
+      $('#hours-wrp').fadeIn();
+    }
+  });
   $('form').on('submit', function (e) {
     console.log(e)
   })

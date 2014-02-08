@@ -11,5 +11,13 @@ module.exports = function (app) {
         messages: req.flash('error')
       });
     })
+
+    app.post('/places/add', function(req,res){
+      //TODO: add the place in the db
+      res.render('/', {
+        user: req.user,
+        messages: req.flash('error')
+      });
+    })
   });
 };
