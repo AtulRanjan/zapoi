@@ -7,7 +7,7 @@ describe('Place', function () {
 
   describe('creation', function () {
 
-    var publicImagesDir = './public/images/uploads/';
+    var publicImagesDir = __dirname + '/../../../public/images/uploads/';
 
     afterEach(function (done) {
 

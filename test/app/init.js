@@ -19,9 +19,8 @@ before(function (done) {
 
   // Load fixtures
   exports.fixtures = {};
-  var fixturesDir = './features/fixtures/';
-  var files = fs.readdirSync(fixturesDir);
 
+  var files = fs.readdirSync(__dirname + '/../../features/fixtures/');
   for (var i in files) {
     if (utils.endsWith(files[i], '.json')) {
       var fileName = '../../features/fixtures/' + files[i];
