@@ -5,6 +5,18 @@ var coords = {
 }
 var markers = [];
 
+function allOfTypeHandler(e) {
+
+}
+
+function closestHandler(e) {
+
+}
+
+function similarHandler(e) {
+
+}
+
 function initMap(x, y) {
   var mapOptions = {
     zoom: 12,
@@ -16,8 +28,8 @@ function initMap(x, y) {
   places.forEach(function initMarker(place) {
     var categoriesLinks = closestLinks = '';
     place.categories.split(',').forEach(function (category) {
-      categoriesLinks += ' <a hrev="javascript;" class="alloftype-' + category + '-link">' + category + '</a>';
-      closestLinks += ' <a hrev="javascript;" class="closest-' + category + '-link" data-coords="' + place.location.lat + ',' + place.location.lng + '">' + category + '</a>';
+      categoriesLinks += ' <a href="javascript;" class="alloftype-link" data-category="' + category + '">' + category + '</a>';
+      closestLinks += ' <a href="javascript;" class="closest-link" data-category="' + category + '" data-coords="' + place.location.lat + ',' + place.location.lng + '">' + category + '</a>';
     })
 
     var contentString =
@@ -26,15 +38,15 @@ function initMap(x, y) {
       '</div>' +
       '<h3 id="firstHeading" class="firstHeading">' + place.name + '</h3>' +
       '<div id="bodyContent">' +
-        '<p>' + place.description + '</p>' +
-        ( place.additionalInfo.phone ? '<p>Phone: ' + place.additionalInfo.phone + '</p>' : '' ) + 
-        ( place.additionalInfo.website ? '<p>Website: <a href="' + place.additionalInfo.website + '">' + place.additionalInfo.website + '</a></p>' : '' ) + 
+      '<p>' + place.description + '</p>' +
+      (place.additionalInfo.phone ? '<p>Phone: ' + place.additionalInfo.phone + '</p>' : '') +
+      (place.additionalInfo.website ? '<p>Website: <a href="' + place.additionalInfo.website + '">' + place.additionalInfo.website + '</a></p>' : '') +
       '<div id="buttons">' +
       'Show:' +
       '<ll>' +
       '<li>All of type:' + categoriesLinks + '</li>' +
       '<li>Closest 5: ' + closestLinks + '</li>' +
-      '<li><a>Similar</a></li>' +
+      '<li><a href="javascript;" class="similar-link" data-place="' + JSON.stringify(place) + '">Similar</a></li>' +
       '</ll>' +
       '</div>' +
       '</div>';
@@ -59,9 +71,12 @@ function initMap(x, y) {
         marker.infowindow.close(map, marker);
       });
     });
-
     markers.push(marker);
   })
+
+  $('.alloftype-link').click(allOfTypeHandler);
+  $('.closest-link').click(closestHandler);
+  $('.similar-link').click(similarHandler);
 }
 
 function initialize() {
