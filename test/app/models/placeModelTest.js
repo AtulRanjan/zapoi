@@ -61,6 +61,10 @@ describe('Place', function () {
       placeRespondsTo("name", done);
     });
 
+    it("should tell its address to the world", function (done) {
+      placeRespondsTo("address", done);
+    });
+
     it("should tell its location to the world", function (done) {
       placeRespondsTo("location", done);
     });
