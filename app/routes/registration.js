@@ -37,7 +37,7 @@ module.exports = function (app) {
           }), req.body.password, function (err, account) {
             if (err) {
               return res.render('registration', {
-                messages: ['Username is already taken.']
+                messages: ['Email is already taken.']
               });
             }
 

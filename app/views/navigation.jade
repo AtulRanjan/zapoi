@@ -10,7 +10,15 @@
             ul.nav
               li
                 a(href='#{settings.baseUrl}/places/add') Add place
+            div
+              form.navbar-form.pull-left(method='get', action='#{settings.baseUrl}/places/search')
+                input.span2(type='text', placeholder='Search for a palce', name='search') 
+                input(name='_csrf', type='hidden', value=csrftoken)
+                button.btn(type='submit') Go, find it!
+
             if (user)
+              - var email = user.email, _id = user._id, name = user.name
+              script(type='text/javascript') window.user = { email: '#{email}', name: '#{name}' };
               ul.nav.pull-right
                 li.dropdown
                   a#user-navigation.dropdown-toggle(href='#', data-toggle='dropdown')
