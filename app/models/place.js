@@ -2,8 +2,8 @@
  * Module dependencies.
  */
 
-var utils = require('../utils/utils')
-mongoose = require('mongoose'),
+var utils = require('../utils/utils'),
+   mongoose = require('mongoose'),
    Schema = mongoose.Schema;
 
 
@@ -22,6 +22,9 @@ var Place = new Schema({
       lng: {
          type: Number
       }
+   },
+   address: {
+      type: String
    },
    categories: {
       type: [],
@@ -82,6 +85,10 @@ var Place = new Schema({
       },
       seats: {
          type: Number
+      },
+      parking: {
+         type: Boolean,
+         default: false
       }
    },
    createdAt: {
