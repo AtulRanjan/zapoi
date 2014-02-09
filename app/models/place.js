@@ -53,12 +53,10 @@ var Place = new Schema({
    }],
    workingHours: [{
       opens: {
-         type: Number,
-         default: 0
+         type: String
       },
       closes: {
-         type: Number,
-         default: 0
+         type: String
       }
    }],
    open24hours: {

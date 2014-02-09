@@ -8,27 +8,27 @@
       "categories": "pharmacy",
       "description": "Аптеки Ремедиум - аптеки със сърце",
       "workingHours": [{
-         "opens": 28800,
-         "closes": 75600
+         "opens": "08:00",
+         "closes": "21:00"
       }, {
-         "opens": 28800,
-         "closes": 75600
+         "opens": "08:00",
+         "closes": "21:00"
       }, {
-         "opens": 28800,
-         "closes": 75600
+         "opens": "08:00",
+         "closes": "21:00"
       }, {
-         "opens": 28800,
-         "closes": 75600
+         "opens": "08:00",
+         "closes": "21:00"
       }, {
-         "opens": 28800,
-         "closes": 75600
+         "opens": "08:00",
+         "closes": "21:00"
       }, {
-         "opens": 28800,
-         "closes": 75600
+         "opens": "08:00",
+         "closes": "21:00"
       }, {
-         "opens": 32400,
-         "closes": 72000
-      } ],
+         "opens": "09:00",
+         "closes": "20:00"
+      }],
       "open24hours": false,
       "additionalInfo": {
          "priceLevel": 1,
@@ -46,27 +46,27 @@
       "categories": "pharmacy",
       "description": "Денонощна аптека\"Гален\"",
       "workingHours": [{
-         "opens": 0,
-         "closes": 86400
+         "opens": "00:00",
+         "closes": "24:00"
       }, {
-         "opens": 0,
-         "closes": 86400
+         "opens": "00:00",
+         "closes": "24:00"
       }, {
-         "opens": 0,
-         "closes": 86400
+         "opens": "00:00",
+         "closes": "24:00"
       }, {
-         "opens": 0,
-         "closes": 86400
+         "opens": "00:00",
+         "closes": "24:00"
       }, {
-         "opens": 0,
-         "closes": 86400
+         "opens": "00:00",
+         "closes": "24:00"
       }, {
-         "opens": 0,
-         "closes": 86400
+         "opens": "00:00",
+         "closes": "24:00"
       }, {
-         "opens": 0,
-         "closes": 86400
-      } ],
+         "opens": "00:00",
+         "closes": "24:00"
+      }],
       "open24hours": true,
       "additionalInfo": {
          "priceLevel": 2,
@@ -100,27 +100,27 @@
       "categories": "bank, government",
       "description": "Българска народна банка",
       "workingHours": [{
-         "opens": 28800,
-         "closes": 63000
+         "opens": "08:00",
+         "closes": "17:30"
       }, {
-         "opens": 28800,
-         "closes": 63000
+         "opens": "08:00",
+         "closes": "17:30"
       }, {
-         "opens": 28800,
-         "closes": 63000
+         "opens": "08:00",
+         "closes": "17:30"
       }, {
-         "opens": 28800,
-         "closes": 63000
+         "opens": "08:00",
+         "closes": "17:30"
       }, {
-         "opens": 28800,
-         "closes": 63000
+         "opens": "08:00",
+         "closes": "17:30"
       }, {
-         "opens": 0,
-         "closes": 0
+         "opens": "00:00",
+         "closes": "00:00"
       }, {
-         "opens": 0,
-         "closes": 0
-      } ],
+         "opens": "00:00",
+         "closes": "00:00"
+      }],
       "open24hours": false,
       "additionalInfo": {
          "phone": "+359 2 91 459",
