@@ -14,6 +14,9 @@ require('express-namespace');
 
 var app = express();
 
+// Connect to MongoDB
+mongoose.connect(env.dbUrl);
+
 // Configuration
 app.configure(function () {
   app.set('views', __dirname + '/app/views');
@@ -81,12 +84,13 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
+// Module exports
 exports.app = app;
 exports.mongoose = mongoose;
 
 // And off we go...
 if (!module.parent) {
-  mongoose.connect(env.dbUrl);
   app.listen(env.port);
   console.log('Listening on port ' + env.port);
 }

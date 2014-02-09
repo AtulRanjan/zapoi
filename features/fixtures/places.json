@@ -34,7 +34,10 @@
       "additionalInfo": {
          "priceLevel": 1,
          "website": "http://www.remedium.bg/",
-         "phone": "+359 2 981 31 29"
+         "phone": "+359 2 981 31 29",
+         "seats": 5,
+         "wifi": false,
+         "parking": false
       }
    },
 

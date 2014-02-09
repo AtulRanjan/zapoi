@@ -8,9 +8,6 @@ var passportStub = require('passport-stub'),
 // Load test goodies
 before(function (done) {
 
-  // Connect to mongodb
-  server.mongoose.connect(env.dbUrl);
-
   // Start the app
   http = server.app.listen(env.port);
 
@@ -40,10 +37,7 @@ after(function (done) {
 
   // Drop the database and close the connection
   server.mongoose.connection.db.dropDatabase(function () {
-    // Close the mongoose connection
-    server.mongoose.connection.close(function () {
-      done();
-    });
+    done();
   });
 });
 

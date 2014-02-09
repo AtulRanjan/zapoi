@@ -6,8 +6,9 @@ block header
   script(src='/javascripts/addplace.js', type="text/javascript")
 
 block content
-  
+
   form#newplace(method='post', action='#{settings.baseUrl}/places/add')
+    input(type='hidden', name='_csrf', value=csrftoken)
     h2 Add new place
     section#general-info
       h3 General info
@@ -16,79 +17,79 @@ block content
       div
         input#description.input-xlarge(type='text', name='description', placeholder='Description', value=description)
       div
-        input#categories.input-xlarge(type='text', name='categories', placeholder='Categories (comma separated)', value=categories) 
+        input#categories.input-xlarge(type='text', name='categories', placeholder='Categories (comma separated)', value=categories)
       div
-        input#address.input-xlarge(type='text', name='address', placeholder='Address', value=address)
+        input#js-address.input-xlarge(type='text', name='address', placeholder='Address')
 
     section#workingh
       h3 Working hours
       div
         input#open24hours.input-xlarge(type='checkbox', name='open24hours')
         label(for='open24hours') Open 24-hours
-        
+
         #hours-wrp
           p
             label(for='Monday-hours') Monday:
             span from
-            input#Monday-hours-open(type='text', name='workingHours[0][open]')
+            input#Monday-hours-open(type='text', name='workingHours[0][opens]')
             span to
-            input#Monday-hours-close(type='text', name='workingHours[0][close]')
+            input#Monday-hours-close(type='text', name='workingHours[0][closes]')
             #slider-Monday-hours.slider
           p
             label(for='Tuesday-hours') Tuesday:
             span from
-            input#Tuesday-hours-open(type='text', name='workingHours[1][open]')
+            input#Tuesday-hours-open(type='text', name='workingHours[1][opens]')
             span to
-            input#Tuesday-hours-close(type='text', name='workingHours[1][close]')
+            input#Tuesday-hours-close(type='text', name='workingHours[1][closes]')
             #slider-Tuesday-hours.slider
           p
             label(for='Wednesday-hours') Wednesday:
             span from
-            input#Wednesday-hours-open(type='text', name='workingHours[2][open]')
+            input#Wednesday-hours-open(type='text', name='workingHours[2][opens]')
             span to
-            input#Wednesday-hours-close(type='text', name='workingHours[2][close]')
+            input#Wednesday-hours-close(type='text', name='workingHours[2][closes]')
             #slider-Wednesday-hours.slider
           p
             label(for='Thursday-hours') Thursday:
             span from
-            input#Thursday-hours-open(type='text', name='workingHours[3][open]')
+            input#Thursday-hours-open(type='text', name='workingHours[3][opens]')
             span to
-            input#Thursday-hours-close(type='text', name='workingHours[3][close]')
+            input#Thursday-hours-close(type='text', name='workingHours[3][closes]')
             #slider-Thursday-hours.slider
           p
             label(for='Friday-hours') Friday:
             span from
-            input#Friday-hours-open(type='text', name='workingHours[4][open]')
+            input#Friday-hours-open(type='text', name='workingHours[4][opens]')
             span to
-            input#Friday-hours-close(type='text', name='workingHours[4][close]')
+            input#Friday-hours-close(type='text', name='workingHours[4][closes]')
             #slider-Friday-hours.slider
           p
             label(for='Saturday-hours') Saturday:
             span from
-            input#Saturday-hours-open(type='text', name='workingHours[5][open]')
+            input#Saturday-hours-open(type='text', name='workingHours[5][opens]')
             span to
-            input#Saturday-hours-close(type='text', name='workingHours[5][close]')
+            input#Saturday-hours-close(type='text', name='workingHours[5][closes]')
             #slider-Saturday-hours.slider
           p
             label(for='Sunday-hours') Sunday:
             span from
-            input#Sunday-hours-open(type='text', name='workingHours[6][open]')
+            input#Sunday-hours-open(type='text', name='workingHours[6][opens]')
             span to
-            input#Sunday-hours-close(type='text', name='workingHours[6][close]')
+            input#Sunday-hours-close(type='text', name='workingHours[6][closes]')
             #slider-Sunday-hours.slider
     section#additional
-      h3 Additional info    
+      h3 Additional info
       div
         label Pricing level:
         span#pricing-lvl(type='text')
-        input#pricing-lvl-hidden(type='text', name='additionalInfo[pricing]', value=3, style='display:none;')
+        input#pricing-lvl-hidden.hidden(type='text', name='additionalInfo[priceLevel]', value=3)
         #slider-pricing
 
       div
-        input#website.input-xlarge(type='text', name='website', placeholder='Website', value=website)
-      
+        input#website.input-xlarge(type='text', name='additionalInfo[website]', placeholder='Website', value=website)
+
       div
-        input#phone.input-xlarge(type='text', name='phone', placeholder='Phone', value=phone)
+        input#phone.input-xlarge(type='text', name='additionalInfo[phone]', placeholder='Phone', value=phone)
 
       div
         input#seats.input-xlarge(type='number', name='additionalInfo[seats]', placeholder='Seats (if applicable)', value=seats)

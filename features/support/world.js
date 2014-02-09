@@ -82,6 +82,19 @@ exports.World = function (callback) {
     callback();
   }
 
+  self.enterPlaceInfo = function (placeData, callback) {
+    self.browser.fill('name', placeData.name)
+      .fill('description', placeData.description)
+      .fill('categories', placeData.categories)
+      .fill('address', placeData.address)
+      .fill('additionalInfo[website]', placeData.additionalInfo.website)
+      .fill('additionalInfo[phone]', placeData.additionalInfo.phone)
+      .fill('additionalInfo[seats]', placeData.additionalInfo.seats)
+      .fill('additionalInfo[wifi]', placeData.additionalInfo.wifi)
+      .fill('additionalInfo[parking]', placeData.additionalInfo.parking);
+    callback();
+  };
+
   self.pressButton = function (buttonText, callback) {
     self.browser.pressButton(buttonText, callback);
   }
