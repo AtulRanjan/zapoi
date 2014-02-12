@@ -2,6 +2,7 @@ var config = require('../config/environments.js'),
   geocoder = require('geocoder'),
   Place = require('../models/place'),
   utils = require('../utils/utils'),
+  middlewares = require('../utils/middlewares'),
   form = require('express-form'),
   Place = require('../models/place'),
   validate = form.validate;
@@ -10,7 +11,7 @@ module.exports = function (app) {
 
   app.namespace(config.baseUrl + '/places', function () {
 
-    app.get('/add', function (req, res) {
+    app.get('/add', middlewares.ensureLoggedIn, function (req, res) {
       res.render('addplace', {
         user: req.user,
         messages: req.flash('error')

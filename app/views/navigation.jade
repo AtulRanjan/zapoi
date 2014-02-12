@@ -7,18 +7,13 @@
             span.icon-bar
           a.brand(href='#{settings.baseUrl}/') POI
           .nav-collapse.collapse
-            ul.nav
-              li
-                a(href='#{settings.baseUrl}/places/add') Add place
             div
               form.navbar-form.pull-left(method='get', action='#{settings.baseUrl}/places/search')
-                input.span2(type='text', placeholder='Search for a palce', name='search') 
-                input(name='_csrf', type='hidden', value=csrftoken)
+                input.span2(type='text', placeholder='Search for a place', name='search')
+                = ' '
                 button.btn(type='submit') Go, find it!
 
             if (user)
-              - var email = user.email, _id = user._id, name = user.name
-              script(type='text/javascript') window.user = { email: '#{email}', name: '#{name}' };
               ul.nav.pull-right
                 li.dropdown
                   a#user-navigation.dropdown-toggle(href='#', data-toggle='dropdown')
@@ -26,6 +21,8 @@
                         b.caret
                       ul.dropdown-menu
                         li
+                          a(href='#{settings.baseUrl}/places/liked') Places I like
+                          a(href='#{settings.baseUrl}/places/add') Add place
                           a(href='#{settings.baseUrl}/logout') Logout
             if (!user)
               form.navbar-form.pull-right(method='post', action='#{settings.baseUrl}/login')

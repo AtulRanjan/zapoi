@@ -16,8 +16,8 @@ describe('Places', function () {
           test.loggedOut();
         });
 
-        it('GET /places/add should return 200 OK', function (done) {
-          utils.gets(test.app, '/places/add', done);
+        it('GET /places/add should redirect to the home page', function (done) {
+          utils.getRedirects(test.app, '/places/add', '/', done);
         });
 
         it('POST /places/add should return 403 forbidden error', function (done) {
