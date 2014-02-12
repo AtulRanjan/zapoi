@@ -24,4 +24,8 @@ module.exports = function () {
   this.Then(/^I should not be authenticated$/, function (callback) {
     this.userIsNotAuthenticated(this.fixtures.users.Jamie, callback);
   });
+
+  this.Given(/^I have logged in$/, function (callback) {
+    this.logUserIn(this.fixtures.users.Jamie, callback);
+  });
 }

@@ -1,6 +1,7 @@
 // use zombie.js as headless browser
 var zombie = require('zombie'),
   env = require('../../app/config/environments'),
+  passportStub = require('passport-stub'),
   User = require('../../app/models/user');
 
 exports.World = function (callback) {
@@ -120,9 +121,17 @@ exports.World = function (callback) {
     }
 
     return randomString.substring(0, size);
-  }
+  };
 
-  self.dummyCallback = function () {}
+  self.logUserIn = function (userData, callback) {
+    passportStub.login([{
+      email: userData.username,
+      name: userData.name
+    }]);
+    callback();
+  };
+
+  self.dummyCallback = function () {};
 
   callback();
 }

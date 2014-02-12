@@ -89,6 +89,10 @@ module.exports = function (app) {
       res.send(place);
     });
 
+    app.get('/liked', middlewares.ensureLoggedIn, function (req, res) {
+
+    });
+
     app.get('/category/:category/:page?', function (req, res) {
       var category = req.params.category;
       var page = Math.abs(parseInt(req.params.page) || 1);
