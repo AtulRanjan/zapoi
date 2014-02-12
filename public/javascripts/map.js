@@ -1,12 +1,29 @@
 var map;
-var coords = {
+var defaultCoords = {
   lat: 52.3728786,
   lng: 4.893659
-}
+};
 var markers = [];
 
-function allOfTypeHandler(e) {
+function clearMarkers() {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(null);
+  }
+  markers.length = 0;
+}
 
+function findByCategory(e) {
+  var element = $(this);
+  var category = element.data("category");
+
+  $.ajax({
+    url: baseUrl + '/places/category/' + category,
+    dataType: 'json',
+    success: function (places) {
+      clearMarkers();
+      createPlaces(places);
+    }
+  });
 }
 
 function closestHandler(e) {
@@ -17,19 +34,21 @@ function similarHandler(e) {
 
 }
 
-function initMap(x, y) {
+function initializeMap(x, y) {
   var mapOptions = {
     zoom: 12,
     center: new google.maps.LatLng(x, y)
   };
   map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+  createPlaces(window.places || []);
+}
 
-  var places = window.places || [];
-  places.forEach(function initMarker(place) {
+function createPlaces(places) {
+  places.forEach(function (place) {
     var categoriesLinks = closestLinks = '';
     place.categories.split(',').forEach(function (category) {
-      categoriesLinks += ' <a href="javascript;" class="alloftype-link" data-category="' + category + '">' + category + '</a>';
-      closestLinks += ' <a href="javascript;" class="closest-link" data-category="' + category + '" data-coords="' + place.location.lat + ',' + place.location.lng + '">' + category + '</a>';
+      categoriesLinks += ' <a href="javascript: void(0);" class="find-by-category-link" data-category="' + category + '">' + category + '</a>';
+      closestLinks += ' <a href="javascript;" class="find-closest-link" data-category="' + category + '" data-coords="' + place.location.lat + ',' + place.location.lng + '">' + category + '</a>';
     })
 
     var contentString =
@@ -46,7 +65,7 @@ function initMap(x, y) {
       '<ll>' +
       '<li>All of type:' + categoriesLinks + '</li>' +
       '<li>Closest 5: ' + closestLinks + '</li>' +
-      '<li><a href="javascript;" class="similar-link" data-place="' + JSON.stringify(place) + '">Similar</a></li>' +
+      '<li><a href="javascript;" class="find-similar-link" data-place="' + JSON.stringify(place) + '">Similar</a></li>' +
       '</ll>' +
       '</div>' +
       '</div>';
@@ -72,26 +91,29 @@ function initMap(x, y) {
       });
     });
     markers.push(marker);
-  })
-
-  $('.alloftype-link').click(allOfTypeHandler);
-  $('.closest-link').click(closestHandler);
-  $('.similar-link').click(similarHandler);
+  });
 }
+
+
 
 function initialize() {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(
       function (position) {
-        initMap(position.coords.latitude, position.coords.longitude);
+        initializeMap(position.coords.latitude, position.coords.longitude);
       },
       function (err) {
-        initMap(defaultcoords.lat, defaultcoords.lng)
+        initializeMap(defaultCoords.lat, defaultCoords.lng)
       }
     );
   } else {
-    initMap(defaultcoords.lat, defaultcoords.lng)
+    initializeMap(defaultCoords.lat, defaultCoords.lng)
   }
+
+  // handle clicks on special links in the infowindows
+  $('body').on('click', '.find-by-category-link', findByCategory);
+  $('body').on('click', '.find-closest-link', findByCategory);
+  $('body').on('click', '.find-similar-link', findByCategory);
 }
 
 

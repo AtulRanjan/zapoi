@@ -35,7 +35,7 @@ after(function (done) {
   // Stop the app and free the db connection
   http.close();
 
-  // Drop the database and close the connection
+  // Drop the database
   server.mongoose.connection.db.dropDatabase(function () {
     done();
   });

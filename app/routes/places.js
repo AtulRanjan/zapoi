@@ -3,6 +3,7 @@ var config = require('../config/environments.js'),
   Place = require('../models/place'),
   utils = require('../utils/utils'),
   form = require('express-form'),
+  Place = require('../models/place'),
   validate = form.validate;
 
 module.exports = function (app) {
@@ -14,7 +15,7 @@ module.exports = function (app) {
         user: req.user,
         messages: req.flash('error')
       });
-    })
+    });
 
     app.post('/add',
 
@@ -64,8 +65,8 @@ module.exports = function (app) {
 
         user: req.user,
         messages: req.flash('error')
-      })
-    })
+      });
+    });
 
     app.get('/closest', function (req, res) {
       var limit = req.params.limit || 50;
@@ -79,28 +80,41 @@ module.exports = function (app) {
         }
       }
       res.send(result);
-    })
-
-    app.get('/alloftype', function (req, res) {
-      var limit = 50;
-      var coords = req.params.coords.split(',');
-      var category = req.params.category;
-
-      var result = [];
-      for (var i = 0, length = mockPlaces.length; i < length && result.length < limit; i++) {
-        if (category in mockPlaces[i].categories) {
-          result.push(mockPlaces[i])
-        }
-      }
-      res.send(result);
-    })
+    });
 
     app.get('/similar', function (req, res) {
       var place = decodeURI(req.params.original);
 
       res.send(place);
-    })
+    });
 
+    app.get('/category/:category/:page?', function (req, res) {
+      var category = req.params.category;
+      var page = Math.abs(parseInt(req.params.page) || 1);
+
+      var limit = 50;
+      var skip = (page - 1) * limit;
+
+      Place.find({
+        categories: category
+      }, {
+        // Exclude certain fields
+        __v: 0,
+        comments: 0,
+        workingHours: 0,
+        createdAt: 0,
+        isApproved: 0,
+        open24hours: 0
+      }, {
+        skip: skip, // Starting Row
+        limit: limit, // Ending Row
+        sort: {
+          createdAt: -1 // Sort by created date DESC
+        }
+      }, function (err, places) {
+        return res.json(places);
+      });
+    });
   });
 };
 

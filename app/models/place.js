@@ -6,6 +6,21 @@ var utils = require('../utils/utils'),
    mongoose = require('mongoose'),
    Schema = mongoose.Schema;
 
+/**
+ * Getters
+ */
+
+var getCategories = function (categories) {
+   return categories.join(',');
+}
+
+/**
+ * Setters
+ */
+
+var setCategories = function (categories) {
+   return categories.split(',');
+}
 
 /**
  * Place schema
@@ -28,12 +43,8 @@ var Place = new Schema({
    },
    categories: {
       type: [],
-      get: function (tags) {
-         return tags.join(',')
-      },
-      set: function (tags) {
-         return tags.split(',')
-      }
+      get: getCategories,
+      set: setCategories
    },
    description: {
       type: String,
@@ -99,6 +110,8 @@ var Place = new Schema({
       type: Boolean,
       default: false
    }
+}, {
+   id: false
 });
 
 
@@ -155,5 +168,10 @@ Place.methods = {
       });
    }
 }
+
+Place.set('toJSON', {
+   getters: true,
+   virtuals: true
+});
 
 module.exports = mongoose.model('Place', Place);

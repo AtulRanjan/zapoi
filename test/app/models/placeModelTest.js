@@ -8,13 +8,13 @@ describe('Place', function () {
   describe('creation', function () {
 
     var publicImagesDir = __dirname + '/../../../public/images/uploads/';
+    var uploadedImage;
 
     afterEach(function (done) {
 
       // remove all the files "uploaded" to public/images/uploads
-      var files = fs.readdirSync(publicImagesDir);
-      for (var i in files) {
-        fs.unlinkSync(publicImagesDir + files[i]);
+      if (uploadedImage) {
+        fs.unlinkSync(publicImagesDir + uploadedImage);
       }
 
       // clear out db
@@ -37,10 +37,14 @@ describe('Place', function () {
       var place = new Place(test.fixtures.places.pharmacy);
       place.saveWithImage(image, function (err, place) {
         should.notEqual(place, undefined);
+        uploadedImage = place.imagePath;
 
         var isImageUploaded = false;
-        for (var i in fs.readdirSync(publicImagesDir)) {
-          isImageUploaded = true;
+        var files = fs.readdirSync(publicImagesDir);
+        for (var i in files) {
+          if (files[i] == uploadedImage) {
+            isImageUploaded = true;
+          }
         }
         should.equal(isImageUploaded, true);
 
