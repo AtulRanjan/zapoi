@@ -84,10 +84,36 @@ module.exports = function (app) {
       res.send(result);
     });
 
-    app.get('/similar', function (req, res) {
-      var place = decodeURI(req.params.original);
+    app.get('/similar/:placeId/:page?', function (req, res) {
+      var placeId = req.params.placeId;
+      var page = Math.abs(parseInt(req.params.page) || 1);
 
-      res.send(place);
+      var limit = 50;
+      var skip = (page - 1) * limit;
+
+      Place.findOne({
+        _id: placeId
+      }, function (err, place) {
+        Place.find({
+          'additionalInfo.priceLevel': place.additionalInfo.priceLevel
+        }, {
+          // Exclude certain fields
+          __v: 0,
+          comments: 0,
+          workingHours: 0,
+          createdAt: 0,
+          isApproved: 0,
+          open24hours: 0
+        }, {
+          skip: skip, // Starting Row
+          limit: limit, // Ending Row
+          sort: {
+            createdAt: -1 // Sort by created date DESC
+          }
+        }, function (err, places) {
+          return res.json(places);
+        });
+      });
     });
 
     app.post('/like', function (req, res) {

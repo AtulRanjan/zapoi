@@ -65,8 +65,18 @@ function closestHandler(e) {
 
 }
 
-function similarHandler(e) {
+function findSimilarPlaces() {
+  var element = $(this);
+  var placeHash = element.data("place");
 
+  $.ajax({
+    url: baseUrl + '/places/similar/' + placeHash,
+    dataType: 'json',
+    success: function (places) {
+      clearMarkers();
+      createPlaces(places);
+    }
+  });
 }
 
 function initializeMap(x, y) {
@@ -86,7 +96,7 @@ function createPlaces(places) {
       closestLinks += ' <a href="javascript;" class="find-closest-link" data-category="' + category + '" data-coords="' + place.location.lat + ',' + place.location.lng + '">' + category + '</a>';
     });
 
-    var isUserLogged = typeof(user) !== 'undefined';
+    var isUserLogged = typeof (user) !== 'undefined';
     var likeDislikeLink = '';
     if (isUserLogged && user.likedPlaces.indexOf(place._id) === -1) {
       likeDislikeLink = '<p><a href="javascript: void(0);" class="like-place" data-place="' + place._id + '">Like this place</a></p>';
@@ -109,7 +119,7 @@ function createPlaces(places) {
       '<ll>' +
       '<li>Find by category:' + categoriesLinks + '</li>' +
       '<li>Closest five: ' + closestLinks + '</li>' +
-      '<li><a href="javascript;" class="find-similar-link" data-place="' + JSON.stringify(place) + '">Similar</a></li>' +
+      '<li><a href="javascript: void(0);" class="find-similar-link" data-place="' + place._id + '">Similar places</a></li>' +
       '</ll>' +
       '</div>' +
       '</div>';
@@ -157,7 +167,7 @@ function initialize() {
   // handle clicks on special links in the infowindows
   $('body').on('click', '.find-by-category-link', findByCategory);
   $('body').on('click', '.find-closest-link', findByCategory);
-  $('body').on('click', '.find-similar-link', findByCategory);
+  $('body').on('click', '.find-similar-link', findSimilarPlaces);
   $('body').on('click', '.like-place', likePlace);
   $('body').on('click', '.dislike-place', dislikePlace);
 }
