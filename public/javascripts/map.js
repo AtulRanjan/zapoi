@@ -12,7 +12,7 @@ function clearMarkers() {
   markers.length = 0;
 }
 
-function findByCategory(e) {
+function findByCategory() {
   var element = $(this);
   var category = element.data("category");
 
@@ -25,6 +25,41 @@ function findByCategory(e) {
     }
   });
 }
+
+function likePlace() {
+  var element = $(this);
+  var placeHash = element.data("place");
+
+  $.ajax({
+    method: 'POST',
+    url: baseUrl + '/places/like/',
+    data: {
+      place: placeHash
+    },
+    success: function (data) {
+      element.text('Disike this place');
+      element.on('click', dislikePlace);
+    }
+  });
+}
+
+function dislikePlace() {
+  var element = $(this);
+  var placeHash = element.data("place");
+
+  $.ajax({
+    method: 'POST',
+    url: baseUrl + '/places/dislike/',
+    data: {
+      place: placeHash
+    },
+    success: function (data) {
+      element.text('Like this place');
+      element.on('click', likePlace);
+    }
+  });
+}
+
 
 function closestHandler(e) {
 
@@ -49,7 +84,15 @@ function createPlaces(places) {
     place.categories.split(',').forEach(function (category) {
       categoriesLinks += ' <a href="javascript: void(0);" class="find-by-category-link" data-category="' + category + '">' + category + '</a>';
       closestLinks += ' <a href="javascript;" class="find-closest-link" data-category="' + category + '" data-coords="' + place.location.lat + ',' + place.location.lng + '">' + category + '</a>';
-    })
+    });
+
+    var isUserLogged = typeof(user) !== 'undefined';
+    var likeDislikeLink = '';
+    if (isUserLogged && user.likedPlaces.indexOf(place._id) === -1) {
+      likeDislikeLink = '<p><a href="javascript: void(0);" class="like-place" data-place="' + place._id + '">Like this place</a></p>';
+    } else if (isUserLogged) {
+      likeDislikeLink = '<p><a href="javascript: void(0);" class="dislike-place" data-place="' + place._id + '">Dislike this place</a></p>';
+    }
 
     var contentString =
       '<div id="content">' +
@@ -60,11 +103,12 @@ function createPlaces(places) {
       '<p>' + place.description + '</p>' +
       (place.additionalInfo.phone ? '<p>Phone: ' + place.additionalInfo.phone + '</p>' : '') +
       (place.additionalInfo.website ? '<p>Website: <a href="' + place.additionalInfo.website + '">' + place.additionalInfo.website + '</a></p>' : '') +
+      likeDislikeLink +
       '<div id="buttons">' +
       'Show:' +
       '<ll>' +
-      '<li>All of type:' + categoriesLinks + '</li>' +
-      '<li>Closest 5: ' + closestLinks + '</li>' +
+      '<li>Find by category:' + categoriesLinks + '</li>' +
+      '<li>Closest five: ' + closestLinks + '</li>' +
       '<li><a href="javascript;" class="find-similar-link" data-place="' + JSON.stringify(place) + '">Similar</a></li>' +
       '</ll>' +
       '</div>' +
@@ -114,6 +158,8 @@ function initialize() {
   $('body').on('click', '.find-by-category-link', findByCategory);
   $('body').on('click', '.find-closest-link', findByCategory);
   $('body').on('click', '.find-similar-link', findByCategory);
+  $('body').on('click', '.like-place', likePlace);
+  $('body').on('click', '.dislike-place', dislikePlace);
 }
 
 

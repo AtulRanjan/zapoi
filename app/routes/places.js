@@ -5,6 +5,7 @@ var config = require('../config/environments.js'),
   middlewares = require('../utils/middlewares'),
   form = require('express-form'),
   Place = require('../models/place'),
+  User = require('../models/user'),
   validate = form.validate;
 
 module.exports = function (app) {
@@ -89,8 +90,44 @@ module.exports = function (app) {
       res.send(place);
     });
 
-    app.get('/liked', middlewares.ensureLoggedIn, function (req, res) {
+    app.post('/like', function (req, res) {
+      Place.findById(req.body.place, function (err, place) {
+        if (err) {
+          return res.json(false);
+        }
 
+        req.user.likePlace(place, function () {
+          res.json(true);
+        })
+      });
+    });
+
+    app.post('/dislike', function (req, res) {
+      Place.findById(req.body.place, function (err, place) {
+        if (err) {
+          return res.json(false);
+        }
+
+        req.user.dislikePlace(place._id, function (err) {
+          if (err) {
+            res.json(false);
+          }
+          res.json(true);
+        })
+      });
+    });
+
+    app.get('/liked', middlewares.ensureLoggedIn, function (req, res) {
+      User.findOne({
+        _id: req.user._id
+      }).populate('likedPlaces',
+        '-__v -comments -workingHours -createdAt -isApproved -open24hours')
+        .exec(function (err, user) {
+          res.render('index', {
+            user: req.user,
+            places: user.likedPlaces
+          });
+        });
     });
 
     app.get('/category/:category/:page?', function (req, res) {

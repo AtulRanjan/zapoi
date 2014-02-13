@@ -7,7 +7,7 @@ block content
   .jumbotron
     #map_canvas
     if (places && places.length > 0)
-      script(type='text/javascript') var places = JSON.parse(decodeURI('#{places}'));
+      script(type='text/javascript') var places = !{JSON.stringify(places)};
 
 block footer
   script(src='/javascripts/map.js', type="text/javascript")
