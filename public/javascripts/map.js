@@ -103,7 +103,7 @@ function createPlaces(places, title) {
   var sidebarTitle = title || 'On the map';
   $('ul.nav.nav-list > *').remove();
   $('ul.nav.nav-list').append('<li class="nav-header">' + sidebarTitle + '</li>')
-  $('ul.nav.nav-list > li.nav-header').append('<a href="javascript: void(0);" class="refresh-btn pull-right btn btn-link btn-lg" role="button">' + 
+  $('ul.nav.nav-list > li.nav-header').append('<a href="javascript: void(0);" title="Refresh map" class="refresh-btn pull-right btn btn-link btn-lg" role="button">' + 
     '<span class="glyphicon glyphicon-refresh"></span>' + 
     '</a>');
   $('a.refresh-btn').click(function(){
