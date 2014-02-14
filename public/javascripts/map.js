@@ -104,7 +104,7 @@ function createPlaces(places, title) {
   $('ul.nav.nav-list > *').remove();
   $('ul.nav.nav-list').append('<li class="nav-header">' + sidebarTitle + '</li>')
   $('ul.nav.nav-list > li.nav-header').append('<a href="javascript: void(0);" title="Refresh map" class="refresh-btn pull-right btn btn-link btn-lg" role="button">' + 
-    '<span class="glyphicon glyphicon-refresh"></span>' + 
+    '<i class="icon-refresh"> </i> ' + 
     '</a>');
   $('a.refresh-btn').click(function(){
     createPlaces(window.places || []);
