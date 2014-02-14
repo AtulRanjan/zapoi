@@ -107,18 +107,30 @@ module.exports = function (app) {
       })
     });
 
-    app.get('/closest', function (req, res) {
-      var limit = req.params.limit || 50;
+    app.get('/closest/:category/:coords', function (req, res) {
+      var limit = req.query.limit || 5;
       var coords = req.params.coords.split(',');
       var category = req.params.category;
 
-      var result = [];
-      for (var i = 0, length = mockPlaces.length; i < length && result.length < limit; i++) {
-        if (category in mockPlaces[i].categories) {
-          result.push(mockPlaces[i])
+      var filter = {
+        'categories': category,
+        'location': {
+          '$near': {
+            '$geometry': {
+              type: "Point",
+              coordinates: coords
+            }
+          }
         }
-      }
-      res.send(result);
+      };
+
+      var options = {
+        limit: limit + 1 //return the 'limit' nearest places and the starting place too
+      };
+
+      Place.find(filter, {}, options, function (err, places) {
+        res.json(places);
+      });
     });
 
     app.get('/similar/:placeId/:page?', function (req, res) {
