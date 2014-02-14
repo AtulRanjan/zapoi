@@ -21,7 +21,7 @@ function findByCategory() {
     dataType: 'json',
     success: function (places) {
       clearMarkers();
-      createPlaces(places);
+      createPlaces(places, 'All ' + category);
     }
   });
 }
@@ -71,7 +71,7 @@ function closestHandler(e) {
     dataType: 'json',
     success: function (places) {
       clearMarkers();
-      createPlaces(places);
+      createPlaces(places, 'Closest ' + category);
     }
   });
 }
@@ -85,7 +85,7 @@ function findSimilarPlaces() {
     dataType: 'json',
     success: function (places) {
       clearMarkers();
-      createPlaces(places);
+      createPlaces(places, 'Similar');
     }
   });
 }
@@ -99,8 +99,19 @@ function initializeMap(x, y) {
   createPlaces(window.places || []);
 }
 
-function createPlaces(places) {
-  places.forEach(function (place) {
+function createPlaces(places, title) {
+  var sidebarTitle = title || 'On the map';
+  $('ul.nav.nav-list > *').remove();
+  $('ul.nav.nav-list').append('<li class="nav-header">' + sidebarTitle + '</li>')
+  $('ul.nav.nav-list > li.nav-header').append('<a href="javascript: void(0);" class="refresh-btn pull-right btn btn-link btn-lg" role="button">' + 
+    '<span class="glyphicon glyphicon-refresh"></span>' + 
+    '</a>');
+  $('a.refresh-btn').click(function(){
+    createPlaces(window.places || []);
+  });
+
+
+  places.forEach(function (place, index) {
     var categoriesLinks = closestLinks = '';
     place.categories.split(',').forEach(function (category) {
       categoriesLinks += ' <a href="javascript: void(0);" class="find-by-category-link" data-category="' + category + '">' + category + '</a>';
@@ -156,6 +167,15 @@ function createPlaces(places) {
       });
     });
     markers.push(marker);
+
+
+    $('ul.nav.nav-list').append('<li class="item"><a href="javascript: void(0)">' + place.name + '</a></li>');
+    $('ul.nav.nav-list > li.item:nth-child(' + (index + 2) + ') > a').click(function () {
+      markers.forEach(function (marker) {
+        marker.infowindow.close(map, marker);
+      });
+      marker.infowindow.open(map, marker);
+    });
   });
 }
 
