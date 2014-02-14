@@ -59,15 +59,52 @@ module.exports = function (app) {
       });
 
     app.get('/search', function (req, res) {
-      //TODO: implement search
-      var result = mockPlaces;
+      var keywords = req.query.search.split(' ');
+      var regex = '(.*)' + (keywords + '').replace(',', '|', 'g') + '(.*)';
 
-      res.render('index', {
-        places: encodeURI(JSON.stringify(result)),
+      var filter = {
+        '$or': [{
+          'name': {
+            '$regex': regex,
+            '$options': 'gi'
+          }
+        }, {
+          'categories': {
+            '$in': keywords
+          }
+        }, {
+          'description': {
+            '$regex': regex,
+            '$options': 'gi'
+          }
+        }, {
+          'address': {
+            '$regex': regex,
+            '$options': 'gi'
+          }
+        }]
+      };
+      var fields = {
+        __v: 0,
+        comments: 0,
+        workingHours: 0,
+        createdAt: 0,
+        isApproved: 0,
+        open24hours: 0
+      };
+      var options = {
+        limit: 50
+      };
 
-        user: req.user,
-        messages: req.flash('error')
-      });
+      Place.find(filter, fields, options, function (err, places) {
+        console.log(places);
+        res.render('index', {
+          places: places,
+
+          user: req.user,
+          messages: req.flash('error')
+        });
+      })
     });
 
     app.get('/closest', function (req, res) {
