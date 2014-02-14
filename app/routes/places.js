@@ -97,7 +97,6 @@ module.exports = function (app) {
       };
 
       Place.find(filter, fields, options, function (err, places) {
-        console.log(places);
         res.render('index', {
           places: places,
 
