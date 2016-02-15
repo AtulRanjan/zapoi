@@ -12,6 +12,26 @@ module.exports = function (app) {
 
   app.namespace(config.baseUrl + '/places', function () {
 
+    app.get('', function(req, res) {
+      Place.find({}, {
+        // Exclude certain fields
+        __v: 0,
+        comments: 0,
+        workingHours: 0,
+        createdAt: 0,
+        isApproved: 0,
+        open24hours: 0
+      }, {
+        skip: 0, // Starting Row
+        limit: 50, // Ending Row
+        sort: {
+          createdAt: -1 // Sort by created date DESC
+        }
+      }, function (err, places) {
+        res.json(places);
+      });
+    });
+
     app.get('/add', middlewares.ensureLoggedIn, function (req, res) {
       res.render('addplace', {
         user: req.user,

@@ -96,7 +96,18 @@ function initializeMap(x, y) {
     center: new google.maps.LatLng(x, y)
   };
   map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
-  createPlaces(window.places || []);
+  initializePlaces();
+}
+
+function initializePlaces() {
+  $.ajax({
+    url: baseUrl + '/places',
+    dataType: 'json',
+    success: function (places) {
+      clearMarkers();
+      createPlaces(places);
+    }
+  });
 }
 
 function createPlaces(places, title) {
@@ -107,7 +118,7 @@ function createPlaces(places, title) {
     '<i class="icon-refresh"> </i> ' + 
     '</a>');
   $('a.refresh-btn').click(function(){
-    createPlaces(window.places || []);
+    initializePlaces();
   });
 
 
